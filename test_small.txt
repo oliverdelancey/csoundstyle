@@ -1,0 +1,4 @@
+iCps cpsmidi
+a1 oscil .3, iCps
+outs a1, a1
+
