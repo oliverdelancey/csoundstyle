@@ -5,10 +5,16 @@ import clapfn
 
 type
   CsTag = ref object of RootObj
+    name: string
     startTag: string
     endTag: string
     startLoc: int
     endLoc: int
+
+proc initCsTag(tagName: string): CsTag = 
+  let startTag = "<" & tagName & ">"
+  let endTag = "</" & tagName & ">"
+  return CsTag(name: tagName, startTag: startTag, endTag: endTag, startLoc: 0, endLoc: 0)
 
 proc checkTag(tag: var CsTag, s: string, l: int): bool =
   if s == tag.startTag:
@@ -20,18 +26,15 @@ proc checkTag(tag: var CsTag, s: string, l: int): bool =
   else:
     return false
 
-proc checkTags(tags: var seq[CsTag], s: string,  l: int) =
-  for tag in tags:
-    if s == tag.startTag:
-      tag.startLoc = l
-    elif s == tag.endTag:
-      tag.endLoc = l
-
-proc initCsTag(tagName: string): CsTag = 
-  let startTag = "<" & tagName & ">"
-  let endTag = "</" & tagName & ">"
-  return CsTag(startTag: startTag, endTag: endTag, startLoc: 0, endLoc: 0)
-
+proc verifyTag(tag: CsTag) =
+  if tag.startLoc == 0:
+    echo "Error: could not find start of tag ", tag.name
+    quit(1)
+  elif tag.endLoc == 0:
+    echo "Error: could not find end of tag ", tag.name
+    quit(1)
+  else:
+    echo "Tag ", tag.name, " OK"
 
 # MAIN PROGRAM
 var parser = ArgumentParser(programName: "csoundstyle", fullName: "csoundstyle",
@@ -53,15 +56,21 @@ var formatted = splitLines(contents)  #-+
 # declare Csound XML tags
 var synthesizer = initCsTag("CsoundSynthesizer")
 var options = initCsTag("CsOptions")
-var instruments = initCsTag("CsOptions")
+var instruments = initCsTag("CsInstruments")
 var score = initCsTag("CsScore")
 
-var tags: set[CsTag] = {synthesizer, options, instruments, score}
-
-var lineCount = 0
+var lineCount = 1
 for line in formatted:
-  tags.checkTags(line, lineCount)
+  if checkTag(synthesizer, line, lineCount): continue
+  elif checkTag(options, line, lineCount): continue
+  elif checkTag(instruments, line, lineCount): continue
+  elif checkTag(score, line, lineCount): continue
   lineCount += 1
 
-writeFile(outfileName, formatted)
+verifyTag(synthesizer)
+verifyTag(options)
+verifyTag(instruments)
+verifyTag(score)
+
+# writeFile(outfileName, formatted)
 
