@@ -49,9 +49,7 @@ let outfileName = case args["out"] == ""
   of true: infileName
   else: args["out"]
 
-let contents = readFile(infileName)   #-+
-                                      # +-> join these lines
-var formatted = splitLines(contents)  #-+
+var formatted = splitLines(readFile(infileName))
 
 # declare Csound XML tags
 var synthesizer = initCsTag("CsoundSynthesizer")
