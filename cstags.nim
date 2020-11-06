@@ -5,8 +5,8 @@ type
     name: string
     startTag: string
     endTag: string
-    startLoc: int
-    endLoc: int
+    startLoc*: int
+    endLoc*: int
 
 proc initCsTag*(tagName: string): CsTag = 
   let startTag = "<" & tagName & ">"
