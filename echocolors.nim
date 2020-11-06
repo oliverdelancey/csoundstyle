@@ -1,16 +1,16 @@
 import colorize
 
-proc colorEcho(msg: string, dark, light: proc, bright = false) =
-    if bright:
-        echo msg.light
+proc colorEcho(msg: string, darkK, lightK: proc, light = false) =
+    if light:
+        echo msg.lightK
     else:
-        echo msg.dark
+        echo msg.darkK
 
-proc redEcho*(msg: string, bright = false) =
-    colorEcho(msg, fgRed, fgLightRed, bright)
+proc redEcho*(msg: string, light = false) =
+    colorEcho(msg, fgRed, fgLightRed, light)
 
-proc yelEcho*(msg: string, bright = false) =
-    colorEcho(msg, fgYellow, fgLightYellow, bright)
+proc yelEcho*(msg: string, light = false) =
+    colorEcho(msg, fgYellow, fgLightYellow, light)
 
-proc grnEcho*(msg: string, bright = false) =
-    colorEcho(msg, fgGreen, fgLightGreen, bright)
+proc grnEcho*(msg: string, light = false) =
+    colorEcho(msg, fgGreen, fgLightGreen, light)
