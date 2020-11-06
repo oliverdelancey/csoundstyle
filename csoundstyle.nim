@@ -3,6 +3,8 @@ import tables
 
 import clapfn
 
+import echocolors
+
 type
   CsTag = ref object of RootObj
     name: string
@@ -28,13 +30,15 @@ proc checkTag(tag: var CsTag, s: string, l: int): bool =
 
 proc verifyTag(tag: CsTag) =
   if tag.startLoc == 0:
-    echo "Error: could not find start of tag ", tag.name
+    # echo "Error: could not find start of tag ", tag.name
+    redEcho("Error: could not find start of tag " & tag.name)
     quit(1)
   elif tag.endLoc == 0:
-    echo "Error: could not find end of tag ", tag.name
+    # echo "Error: could not find end of tag ", tag.name
+    redEcho("Error: could not find end of tag " & tag.name)
     quit(1)
   else:
-    echo "Tag ", tag.name, " OK"
+    grnEcho("Tag " & tag.name & " OK")
 
 # MAIN PROGRAM
 var parser = ArgumentParser(programName: "csoundstyle", fullName: "csoundstyle",
