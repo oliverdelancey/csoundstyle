@@ -2,6 +2,19 @@
 
 A Csound source code formatter.
 
+## Installation
+
+1. Give `install.sh` executable permissions.
+```bash
+chmod +x install.sh
+```
+2. Run `install.sh`
+```bash
+./install.sh
+```
+
+## Usage
+
 ```
 csoundstyle v0.1.0
 A Csound source code formatter.
