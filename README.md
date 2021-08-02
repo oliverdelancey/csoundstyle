@@ -4,14 +4,8 @@ A Csound source code formatter.
 
 ## Installation
 
-1. Give `install.sh` executable permissions.
-```bash
-chmod +x install.sh
-```
-2. Run `install.sh`
-```bash
-./install.sh
-```
+1. Run `make build`
+2. Run `make install` with sudo.
 
 ## Usage
 
